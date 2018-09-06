@@ -42,10 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractBattlePolicy.cs" />
+    <Compile Include="BattlePolicy\AbstractBattlePolicy.cs" />
     <Compile Include="Environment.cs" />
-    <Compile Include="PetNpcBattlePolicy.cs" />
-    <Compile Include="WorldQuestNpcBattlePolicy.cs" />
+    <Compile Include="BattlePolicy\FortressBattlePolicy.cs" />
+    <Compile Include="BattlePolicy\FortressNpcBattlePolicy.cs" />
+    <Compile Include="BattlePolicy\PetNpcBattlePolicy.cs" />
+    <Compile Include="BattlePolicy\WorldQuestNpcBattlePolicy.cs" />
     <Compile Include="PetStatus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

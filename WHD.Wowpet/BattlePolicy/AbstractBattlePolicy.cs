@@ -31,6 +31,13 @@ namespace WHD.Wowpet
     }
     public abstract class AbstractBattlePolicy
     {
+        public AbstractBattlePolicy(WowProcess process, int MaxTurn,DateTime EndTime,int ErrorWhenEnemyTrackingRetry)
+        {
+            this.process = process;
+            this.MaxTurn = MaxTurn;
+            this.EndTime = EndTime;
+            this.ErrorWhenEnemyTrackingRetry = ErrorWhenEnemyTrackingRetry;
+        }
         protected int MaxTurn { get; set; }
         protected int turn { get; set; }
         protected DateTime EndTime { get; set; }
@@ -51,8 +58,40 @@ namespace WHD.Wowpet
         public abstract void EnemyTrackingAction();
         public abstract void AfterEnemyTracking();
         public abstract void BattleFinished();
-        public abstract void AllTurnFinished();
         public abstract void TryToHealDueToRobustness();
+        public abstract void BattleRobustnessLow(BattleRobustness battleRobustness);
+        public virtual void HealPet()
+        {
+            SkillHealPet();
+        }
+        public virtual void AllTurnFinished()
+        {
+            if (process.PetStatus.CheckIfCanHeal())
+            {
+                HealPet();
+                battleRobustness = BattleRobustness.Normal;
+                process.PetStatus.ResetHealTime();
+            }
+            else
+            {
+                //if (process.useBandage)
+                //{
+                //    BandageHealPet();
+                //    ConsoleAndLogInfo("使用绷带");
+                //    continue;
+                //}
+                //else
+                //{
+                ConsoleAndLogInfo("等待恢复CD");
+                double sleepTime = 500 - process.PetStatus.GetLastHealSeconds() + 5;
+                Thread.Sleep((int)sleepTime * 1000);
+                ConsoleAndLogInfo("等待恢复CD完成");
+                HealPet();
+                battleRobustness = BattleRobustness.Normal;
+                process.PetStatus.ResetHealTime();
+                //}
+            }
+        }
         public int Run()
         {
             ConsoleAndLogInfo($"BattleStart:{MaxTurn}");
@@ -86,7 +125,7 @@ namespace WHD.Wowpet
                         {
                             if (skillHealUsed && process.PetStatus.CheckIfCanHeal() && (DateTime.Now - LastTryToHealDueToRobustnessTime).TotalSeconds > 500)
                             {
-                                SkillHealPet();
+                                HealPet();
                                 ConsoleAndLogInfo($"重新开始回合计数");
                                 battleRobustness = BattleRobustness.Normal;
                                 turn = 1;
@@ -128,6 +167,7 @@ namespace WHD.Wowpet
                     {
                         //健壮性降低
                         battleRobustness += 1;
+                        BattleRobustnessLow(battleRobustness);
                         ConsoleAndLogInfo($"!!!健壮性：({battleRobustness})");
                         turn--;
                     }
@@ -157,30 +197,7 @@ namespace WHD.Wowpet
                     Thread.Sleep(2000);
                 }
                 ConsoleAndLogInfo("AllTurnFinished");
-                if (process.PetStatus.CheckIfCanHeal())
-                {
-                    SkillHealPet();
-                    battleRobustness = BattleRobustness.Normal;
-                    process.PetStatus.ResetHealTime();
-                }
-                else
-                {
-                    //if (process.useBandage)
-                    //{
-                    //    BandageHealPet();
-                    //    ConsoleAndLogInfo("使用绷带");
-                    //    continue;
-                    //}
-                    //else
-                    //{
-                        double sleepTime = 500 - process.PetStatus.GetLastHealSeconds() + 5;
-                        Thread.Sleep((int)sleepTime * 1000);
-                        ConsoleAndLogInfo("等待恢复CD完成");
-                        SkillHealPet();
-                        battleRobustness = BattleRobustness.Normal;
-                        process.PetStatus.ResetHealTime();
-                    //}
-                }
+                AllTurnFinished();
             }
         }
 
@@ -192,20 +209,7 @@ namespace WHD.Wowpet
             Console.WriteLine(s);
             LogHelper.Info(s);
         }
-
-        private void HealByNpc()
-        {
-            Console.Write("治疗中...");
-            //process.NatualSendKey(Keys.OemOpenBrackets);
-            process.RandomSleep(200, 500);
-            process.NatualSendKey(Environment.KeyForwardTalk);
-            process.RandomSleep(5000, 5300);
-            //process.NatualSendKey(Keys.OemOpenBrackets);
-            process.RandomSleep(500, 1000);
-            Console.WriteLine("治疗完成");
-
-            SkillHealPet();
-        }
+        
         private void BattleWithHomePet(int x = 964, int y = 478)
         {
             //Console.Write($"({battleCount})寻找木桩战斗...");
@@ -215,13 +219,14 @@ namespace WHD.Wowpet
         }
         protected void SkillHealPet()
         {
-            ConsoleAndLogInfo("治疗宠物");
+            ConsoleAndLogInfo("技能治疗宠物");
             process.RandomSleep(500, 550);
             process.NatualSendKey(Environment.SkillHealPet);
             process.RandomSleep(500, 550);
         }
         private void BandageHealPet()
         {
+            ConsoleAndLogInfo("绷带治疗宠物");
             process.RandomSleep(500, 550);
             process.NatualSendKey(Environment.BandageHealPet);
             process.RandomSleep(500, 550);

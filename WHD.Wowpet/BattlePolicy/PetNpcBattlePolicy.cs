@@ -8,19 +8,12 @@ namespace WHD.Wowpet
 {
     public class PetNpcBattlePolicy : AbstractBattlePolicy
     {
-        public PetNpcBattlePolicy(WowProcess process,int maxTurn)
+        public PetNpcBattlePolicy(WowProcess process,int maxTurn):base(process,maxTurn,
+            DateTime.Now.AddMonths(1),20)
         {
-            base.process = process;
-            MaxTurn = maxTurn;
-            EndTime = DateTime.Now.AddMonths(1);
-            ErrorWhenEnemyTrackingRetry = 20;
         }
         
         public override void AfterEnemyTracking()
-        {
-        }
-
-        public override void AllTurnFinished()
         {
         }
 
@@ -31,7 +24,7 @@ namespace WHD.Wowpet
         public override void BattleFinished()
         {
         }
-        
+
 
         public override void BeforeEnemyTracking()
         {
@@ -40,7 +33,7 @@ namespace WHD.Wowpet
         public override void EnemyTrackingAction()
         {
             Console.Write($"寻找NPC战斗...");
-            process.NatualSendKey(Environment.KeySelectEnemyNpc);
+            process.NatualSendKey(Environment.KeySelectEnemyNpcAndSelectGossipOption1);
             process.RandomSleep(200, 500);
             process.NatualSendKey(Environment.KeyForwardTalk);
             process.RandomSleep(3000, 5000);
@@ -49,8 +42,11 @@ namespace WHD.Wowpet
 
         public override void TryToHealDueToRobustness()
         {
-            SkillHealPet();
+            HealPet();
         }
-        
+
+        public override void BattleRobustnessLow(BattleRobustness battleRobustness)
+        {
+        }
     }
 }

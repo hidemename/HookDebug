@@ -58,14 +58,14 @@ namespace WHD.Wowpet
         public override int StartWork()
         {
 
-            Console.WriteLine("Use Bandage? yes is 1");
-            var a = Console.ReadLine();
-            var useBandage = false;
-            if (a.Equals("1"))
-            {
-                useBandage = true;
-            }
-            Console.WriteLine("1.NPC 2.PetNpc 3.Outside");
+            //Console.WriteLine("Use Bandage? yes is 1");
+            //var a = Console.ReadLine();
+            //var useBandage = false;
+            //if (a.Equals("1"))
+            //{
+            //    useBandage = true;
+            //}
+            Console.WriteLine("1.NPC 2.PetNpc 3.FortressNpc");
             var c = Console.ReadLine();
             if (c.Equals("1"))
             {
@@ -83,7 +83,10 @@ namespace WHD.Wowpet
             }
             else if (c.Equals("3"))
             {
-                return 0;//BattleAtSHL();
+                Console.WriteLine("Input time count");
+                var time = Console.ReadLine();
+
+                return new FortressNpcBattlePolicy(this, int.Parse(time)).Run();
             }
             else
             {

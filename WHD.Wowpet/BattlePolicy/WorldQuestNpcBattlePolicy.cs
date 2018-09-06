@@ -8,24 +8,13 @@ namespace WHD.Wowpet
 {
     public class WorldQuestNpcBattlePolicy : AbstractBattlePolicy
     {
-        DateTime TaskResetTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 55, 00);
-        public WorldQuestNpcBattlePolicy(WowProcess process,int maxTurn)
+        private static DateTime TaskResetTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 00, 00);
+        public WorldQuestNpcBattlePolicy(WowProcess process, int maxTurn) : base(process, maxTurn,
+            DateTime.Now > TaskResetTime ? TaskResetTime.AddDays(1) : TaskResetTime, 20)
         {
-            base.process = process;
-            MaxTurn = maxTurn;
-            EndTime = TaskResetTime;
-            if (DateTime.Now.Hour >= 7)
-            {
-                EndTime = EndTime.AddDays(1);
-            }
-            ErrorWhenEnemyTrackingRetry = 20;
         }
         
         public override void AfterEnemyTracking()
-        {
-        }
-
-        public override void AllTurnFinished()
         {
         }
 
@@ -45,19 +34,22 @@ namespace WHD.Wowpet
         public override void EnemyTrackingAction()
         {
             Console.Write($"寻找NPC战斗...");
-            process.NatualSendKey(Environment.KeySelectEnemyNpc);
+            process.NatualSendKey(Environment.KeySelectEnemyNpcAndSelectGossipOption1);
             process.RandomSleep(200, 500);
             process.NatualSendKey(Environment.KeyForwardTalk);
             process.RandomSleep(3000, 5000);
-            process.NatualSendKey(Environment.KeySelectGossipOption1);
+            process.NatualSendKey(Environment.KeySelectEnemyNpcAndSelectGossipOption1);
             process.RandomSleep(500, 1000);
             Console.WriteLine("结束");
         }
 
         public override void TryToHealDueToRobustness()
         {
-            SkillHealPet();
+            HealPet();
         }
-        
+
+        public override void BattleRobustnessLow(BattleRobustness battleRobustness)
+        {
+        }
     }
 }
