@@ -5,6 +5,9 @@ using System.Text;
 
 namespace WHD.Wowpet
 {
+    /// <summary>
+    /// 要塞里面和NPC的对战策略
+    /// </summary>
     public class FortressNpcBattlePolicy : FortressBattlePolicy
     {
         public FortressNpcBattlePolicy(WowProcess process, int maxTurn) : base(process, maxTurn)

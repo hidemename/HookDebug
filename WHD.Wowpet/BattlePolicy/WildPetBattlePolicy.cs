@@ -7,13 +7,12 @@ using System.Threading;
 namespace WHD.Wowpet
 {
     /// <summary>
-    /// 世界任务的NPC对战策略
+    /// 野外宠物NPC对战策略。
     /// </summary>
-    public class WorldQuestNpcBattlePolicy : AbstractBattlePolicy
+    public class WildPetBattlePolicy : AbstractBattlePolicy
     {
-        private static DateTime TaskResetTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 00, 00);
-        public WorldQuestNpcBattlePolicy(WowProcess process, int maxTurn) : base(process, maxTurn,
-            DateTime.Now > TaskResetTime ? TaskResetTime.AddDays(1) : TaskResetTime, 20)
+        public WildPetBattlePolicy(WowProcess process,int maxTurn):base(process,maxTurn,
+            DateTime.Now.AddMonths(1),20)
         {
         }
         
@@ -24,7 +23,7 @@ namespace WHD.Wowpet
         public override void BattleFinished()
         {
         }
-        
+
 
         public override void BeforeEnemyTracking()
         {
@@ -32,13 +31,11 @@ namespace WHD.Wowpet
 
         public override void EnemyTrackingAction()
         {
-            Console.Write($"寻找NPC战斗...");
-            process.NatualSendKey(Environment.KeySelectEnemyNpcAndSelectGossipOption1);
+            Console.Write($"寻找野宠战斗...");
+            process.NatualSendKey(Environment.KeySelectWildPet);
             process.RandomSleep(200, 500);
             process.NatualSendKey(Environment.KeyForwardTalk);
-            process.RandomSleep(3000, 5000);
-            process.NatualSendKey(Environment.KeySelectEnemyNpcAndSelectGossipOption1);
-            process.RandomSleep(500, 1000);
+            process.RandomSleep(5000, 5300);
             Console.WriteLine("结束");
         }
 

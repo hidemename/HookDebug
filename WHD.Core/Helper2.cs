@@ -109,6 +109,7 @@ namespace WHD.Core
         public static Bitmap ScreenShotAllScreen()
         {
             IntPtr dc1 = GDI32.CreateDC("DISPLAY", null, null, IntPtr.Zero);
+            Console.WriteLine(dc1.ToString());
             //创建显示器的DC   
             Graphics g1 = Graphics.FromHdc(dc1);
             //由一个指定设备的句柄创建一个新的Graphics对象   
@@ -121,6 +122,8 @@ namespace WHD.Core
             IntPtr dc2 = g2.GetHdc();
             //把当前屏幕捕获到位图对象中   
             GDI32.BitBlt(dc2, 0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, dc3, 0, 0, CopyPixelOperation.SourceCopy);
+
+            GDI32.DeleteDC(dc1);
             //把当前屏幕拷贝到图中   
             g1.ReleaseHdc(dc3);
             //释放屏幕句柄   
@@ -151,6 +154,8 @@ namespace WHD.Core
             IntPtr hdcDest = gDest.GetHdc();
             //把当前屏幕捕获到位图对象中   
             GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSource, 0, 0, CopyPixelOperation.SourceCopy);
+
+            GDI32.ReleaseDC(hWnd, sourceDC);
             //把当前屏幕拷贝到图中   
             gSource.ReleaseHdc(hdcSource);
             //释放屏幕句柄   

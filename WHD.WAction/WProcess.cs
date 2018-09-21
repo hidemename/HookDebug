@@ -12,9 +12,8 @@ namespace WHD.WAction
 {
     public partial class WProcess : AbstractProcess
     {
-
         public ManualResetEvent mre = new ManualResetEvent(false);
-        public WProcess() : base("魔兽世界")
+        public WProcess() : base(Encoding.UTF8.GetString(Convert.FromBase64String("6a2U5YW95LiW55WM")))
         {
         }
 
@@ -27,27 +26,25 @@ namespace WHD.WAction
             {
                 ConsoleAndLogInfo("NextTurn");
                 NatualSendKey(Keys.Tab);
-                CastSkill(Keys.D1);
                 CastSkill(Keys.D2);
-                CastSkill(Keys.E);
-                NatualSendKey(Keys.Tab);
-                CastSkill(Keys.D3);
                 CastSkill(Keys.D1);
+                CastSkill(Keys.R);
                 CastSkill(Keys.E);
                 NatualSendKey(Keys.Tab);
-                CastSkill(Keys.D2);
-                CastSkill(Keys.D3);
-                CastSkill(Keys.E);
-                NatualSendKey(Keys.Tab);
-                CastSkill(Keys.D4);
-                CastSkill(Keys.D3);
-                CastSkill(Keys.D3);
-                RandomSleep(1800, 2000);
+                CastSkill(Keys.D1);
                 CastSkill(Keys.D8);
-                CastSkill(Keys.A);
+                CastSkill(Keys.E);
+                NatualSendKey(Keys.Tab);
+                CastSkill(Keys.D2);
+                CastSkill(Keys.D1);
+                CastSkill(Keys.R);
+                CastSkill(Keys.E);
+                CastSkill(Keys.D8);
+                NatualSendKey(Keys.Tab);
                 RandomSleep(1800, 2000);
                 CastSkill(Keys.D8);
                 CastSkill(Keys.D);
+                CastSkill(Keys.E);
             }
         }
 

@@ -201,8 +201,6 @@ namespace WHD.Wowpet
             }
         }
 
-        public abstract void Battle();
-
 
         public void ConsoleAndLogInfo(string s)
         {
@@ -210,13 +208,6 @@ namespace WHD.Wowpet
             LogHelper.Info(s);
         }
         
-        private void BattleWithHomePet(int x = 964, int y = 478)
-        {
-            //Console.Write($"({battleCount})寻找木桩战斗...");
-            process.NatualSendMouse(true, x, y);
-            process.RandomSleep(3000, 3500);
-            Console.WriteLine("结束");
-        }
         protected void SkillHealPet()
         {
             ConsoleAndLogInfo("技能治疗宠物");
@@ -232,14 +223,5 @@ namespace WHD.Wowpet
             process.RandomSleep(500, 550);
         }
 
-        private void BattleWithPet()
-        {
-            //Console.Write($"({battleCount})寻找宠物战斗...");
-            //process.NatualSendKey(Keys.OemCloseBrackets);
-            process.RandomSleep(200, 500);
-            //process.NatualSendKey(_keyAutoMoveAndTalk);
-            process.RandomSleep(5000, 5300);
-            Console.WriteLine("结束");
-        }
     }
 }

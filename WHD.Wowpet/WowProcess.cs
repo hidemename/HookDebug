@@ -28,7 +28,7 @@ namespace WHD.Wowpet
         Bitmap petBattleBmp;
 
         public ManualResetEvent mre = new ManualResetEvent(false);
-        public WowProcess() : base("魔兽世界")
+        public WowProcess() : base(Encoding.UTF8.GetString(Convert.FromBase64String("6a2U5YW95LiW55WM")))
         {
             battleThread = new Thread(BattleProc);
             battleThread.Start();
@@ -65,7 +65,7 @@ namespace WHD.Wowpet
             //{
             //    useBandage = true;
             //}
-            Console.WriteLine("1.NPC 2.PetNpc 3.FortressNpc");
+            Console.WriteLine("1.NPC 2.PetNpc 3.FortressNpc 4.WildPet 5.WildPet(Don't Care Turn)");
             var c = Console.ReadLine();
             if (c.Equals("1"))
             {
@@ -87,6 +87,20 @@ namespace WHD.Wowpet
                 var time = Console.ReadLine();
 
                 return new FortressNpcBattlePolicy(this, int.Parse(time)).Run();
+            }
+            else if (c.Equals("4"))
+            {
+                Console.WriteLine("Input time count");
+                var time = Console.ReadLine();
+
+                return new WildPetBattlePolicy(this, int.Parse(time)).Run();
+            }
+            else if (c.Equals("5"))
+            {
+                Console.WriteLine("Input time count");
+                var time = Console.ReadLine();
+
+                return new WildPetBattleNoTurnPolicy(this).Run();
             }
             else
             {

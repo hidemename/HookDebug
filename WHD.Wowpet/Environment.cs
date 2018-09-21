@@ -21,6 +21,10 @@ namespace WHD.Wowpet
         /// </summary>
         public const Keys KeySelectEnemyNpcAndSelectGossipOption1 = Keys.OemOpenBrackets;
         /// <summary>
+        /// 找到野宠宏"["
+        /// </summary>
+        public const Keys KeySelectWildPet = Keys.OemCloseBrackets;
+        /// <summary>
         /// 使用技能治疗宠物"'"
         /// </summary>
         public const Keys SkillHealPet = Keys.OemQuotes;

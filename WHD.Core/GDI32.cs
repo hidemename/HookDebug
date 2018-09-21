@@ -38,6 +38,8 @@ namespace WHD.Core
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowDC(IntPtr hwnd);
+        [DllImport("User32.dll")]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowRect(IntPtr hWnd, ref WinRECT rect);
         [DllImport("gdi32.dll")]

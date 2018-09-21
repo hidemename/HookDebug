@@ -6,6 +6,9 @@ using System.Threading;
 
 namespace WHD.Wowpet
 {
+    /// <summary>
+    /// 固定的宠物NPC对战策略。比如小艺
+    /// </summary>
     public class PetNpcBattlePolicy : AbstractBattlePolicy
     {
         public PetNpcBattlePolicy(WowProcess process,int maxTurn):base(process,maxTurn,
@@ -16,11 +19,7 @@ namespace WHD.Wowpet
         public override void AfterEnemyTracking()
         {
         }
-
-        public override void Battle()
-        {
-        }
-
+        
         public override void BattleFinished()
         {
         }

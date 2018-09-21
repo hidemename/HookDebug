@@ -5,6 +5,9 @@ using System.Text;
 
 namespace WHD.Wowpet
 {
+    /// <summary>
+    /// 要塞里面的宠物对战策略父类
+    /// </summary>
     public abstract class FortressBattlePolicy : AbstractBattlePolicy
     {
         private static DateTime TaskResetTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 00, 00);
@@ -20,11 +23,7 @@ namespace WHD.Wowpet
         {
             NPCHealPet();
         }
-
-        public override void Battle()
-        {
-        }
-
+        
         public override void BattleFinished()
         {
         }
