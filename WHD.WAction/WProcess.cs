@@ -48,6 +48,17 @@ namespace WHD.WAction
             }
         }
 
+        /// <summary>
+        /// Battling Thread
+        /// </summary>
+        int Always1(int delay)
+        {
+            while (true)
+            {
+                NatualSendKey(Keys.D1,0,0);
+                RandomSleep(delay, delay);
+            }
+        }
 
         public override int StartWork()
         {
@@ -59,14 +70,25 @@ namespace WHD.WAction
             //{
             //    useBandage = true;
             //}
-            Console.WriteLine("1.FourPlusFour");
+            Console.WriteLine("1.FourPlusFour 2.Always1");
             var c = Console.ReadLine();
             if (c.Equals("1"))
             {
                 Console.WriteLine("Input time count");
                 var time = Console.ReadLine();
-                
+
                 return FourPlusFour();
+            }
+            if (c.Equals("2"))
+            {
+                Console.WriteLine("Input delay");
+                var time = Console.ReadLine();
+
+                return Always1(int.Parse(time));
+            }
+            if (c.Equals("3"))
+            {
+                return Always1(1900);
             }
             else
             {

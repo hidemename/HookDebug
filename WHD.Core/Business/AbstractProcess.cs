@@ -30,6 +30,10 @@ namespace WHD.Core
         {
             Helper2.NatualSendKey(window, key);
         }
+        public void NatualSendKey(Keys key,int delayMin, int delayMax)
+        {
+            Helper2.NatualSendKey(window, key, delayMin, delayMax);
+        }
         public void NatualSendMouse(bool isLeft,int x,int y)
         {
             Helper2.NatualSendMouse(window, isLeft, x, y);

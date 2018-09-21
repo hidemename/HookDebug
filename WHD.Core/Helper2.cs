@@ -56,6 +56,12 @@ namespace WHD.Core
             Thread.Sleep(rnd.Next(20, 100));
             SendMessage(hWnd, WM_KEYUP, Convert.ToInt32(key), 0);
         }
+        public static void NatualSendKey(IntPtr hWnd, Keys key,int delayMin, int delayMax)
+        {
+            SendMessage(hWnd, WM_KEYDOWN, Convert.ToInt32(key), 0);
+            Thread.Sleep(rnd.Next(20, 100));
+            SendMessage(hWnd, WM_KEYUP, Convert.ToInt32(key), 0);
+        }
         public static void NatualSendMouse(IntPtr hWnd, bool isLeft,int x,int y)
         {
             if (isLeft)
