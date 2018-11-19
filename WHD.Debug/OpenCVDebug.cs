@@ -17,18 +17,18 @@ namespace WHD.Debug
         {
             Thread.Sleep(3000);
 
-            string sourceBmpPath = AppDomain.CurrentDomain.BaseDirectory + @"Source-Auto.bmp";
-            string PetBattleBmpPath = AppDomain.CurrentDomain.BaseDirectory + @"Resource\PetBattle-nb.bmp";
+            string sourceBmpPath = AppDomain.CurrentDomain.BaseDirectory + @"Resource\test-fish.png";
+            string findImageBmpPath = AppDomain.CurrentDomain.BaseDirectory + @"Resource\BigBait.png";
             //Bitmap sourceBmp = Helper2.ScreenShotAllScreen();
-            Bitmap sourceBmp = Helper2.ScreenShotAllScreen();
             //sourceBmp.Save(sourceBmpPath);
 
-            MemoryStream memoryStream = new MemoryStream();
-            sourceBmp.Save(memoryStream, ImageFormat.Bmp);
+            //MemoryStream memoryStream = new MemoryStream();
+            //sourceBmp.Save(memoryStream, ImageFormat.Bmp);
 
 
-            Mat templateImage = new Mat(PetBattleBmpPath, ImreadModes.Color);
-            Mat sourceImage = Mat.FromStream(memoryStream, ImreadModes.AnyColor);
+            Mat templateImage = new Mat(findImageBmpPath, ImreadModes.Color);
+            Mat sourceImage = new Mat(sourceBmpPath, ImreadModes.Color);
+            // Mat sourceImage = Mat.FromStream(memoryStream, ImreadModes.AnyColor);
             //sourceImage.SaveImage(sourceBmpPath);
 
 

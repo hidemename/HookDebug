@@ -51,15 +51,29 @@ namespace WHD.WAction
         /// <summary>
         /// Battling Thread
         /// </summary>
-        int Always1(int delay)
+        int AlwaysKey(Keys k,int delayMin, int delayMax)
         {
             while (true)
             {
-                NatualSendKey(Keys.D1,0,0);
-                RandomSleep(delay, delay);
+                NatualSendKey(k, 0, 10);
+                RandomSleep(delayMin, delayMax);
             }
         }
-
+        /// <summary>
+        /// Battling Thread
+        /// </summary>
+        int Standby()
+        {
+            while (true)
+            {
+                ConsoleAndLogInfo("NextTurn");
+                NatualSendKey(Keys.Tab);
+                CastSkill(Keys.W);
+                CastSkill(Keys.Space);
+                CastSkill(Keys.S);
+                RandomSleep(40000, 60000);
+            }
+        }
         public override int StartWork()
         {
 
@@ -70,7 +84,7 @@ namespace WHD.WAction
             //{
             //    useBandage = true;
             //}
-            Console.WriteLine("1.FourPlusFour 2.Always1");
+            Console.WriteLine("1.FourPlusFour 2.Always1 3.Standby,4.Always//(pet)");
             var c = Console.ReadLine();
             if (c.Equals("1"))
             {
@@ -84,11 +98,15 @@ namespace WHD.WAction
                 Console.WriteLine("Input delay");
                 var time = Console.ReadLine();
 
-                return Always1(int.Parse(time));
+                return AlwaysKey(Keys.D1, int.Parse(time), int.Parse(time));
             }
             if (c.Equals("3"))
             {
-                return Always1(1900);
+                return Standby();
+            }
+            if (c.Equals("4"))
+            {
+                return AlwaysKey(Keys.OemBackslash, 1000, 1200);
             }
             else
             {
